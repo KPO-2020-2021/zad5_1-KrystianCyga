@@ -8,6 +8,7 @@
 
 #include "vector.hh"
 #include "matrix.hh"
+#include "lacze_do_gnuplota.hh"
 
 #define PLIK_WZORCOWEGO_SZESCIANU       "bryly_wzorcowe/szescian.dat"
 #define PLIK_WZORCOWEGO_GRANIASTOSLUPA6 "bryly_wzorcowe/graniastoslup6.dat"
@@ -225,6 +226,142 @@ skala_korpusu[2]=2;
 				        skala_korpusu,
 				        translacji);
 }
+
+#define PLIK_ROBOCZY__DRON1_KORPUS  "dat/PlikRoboczy_Dron1_Korpus.dat"
+#define PLIK_ROBOCZY__DRON1_ROTOR1  "dat/PlikRoboczy_Dron1_Rotor1.dat"
+#define PLIK_ROBOCZY__DRON1_ROTOR2  "dat/PlikRoboczy_Dron1_Rotor2.dat"
+#define PLIK_ROBOCZY__DRON1_ROTOR3  "dat/PlikRoboczy_Dron1_Rotor3.dat"
+#define PLIK_ROBOCZY__DRON1_ROTOR4  "dat/PlikRoboczy_Dron1_Rotor4.dat"
+
+#define PLIK_WLASCIWY__DRON1_KORPUS  "dat/PlikWlasciwy_Dron1_Korpus.dat"
+#define PLIK_WLASCIWY__DRON1_ROTOR1  "dat/PlikWlasciwy_Dron1_Rotor1.dat"
+#define PLIK_WLASCIWY__DRON1_ROTOR2  "dat/PlikWlasciwy_Dron1_Rotor2.dat"
+#define PLIK_WLASCIWY__DRON1_ROTOR3  "dat/PlikWlasciwy_Dron1_Rotor3.dat"
+#define PLIK_WLASCIWY__DRON1_ROTOR4  "dat/PlikWlasciwy_Dron1_Rotor4.dat"
+
+/*!
+ * \brief Tworzy pliku pozwalające na wizualizację drona.
+ * 
+ * Zapisuje do odpwiednich plików opisy brył tworzących wizualizację drona.
+ *
+ * \retval true - gdy operacja powiedzie się,
+ * \retval false - gdy operacja nie powiedzie się z powodu braku możliwości 
+ *                 otwarcia jednego z plików lub niepowodzenia odczytu lub zapisu do pliku.
+ */
+bool TworzDrona()
+{
+  static double KatObrotuRotora_st = 0; 
+Vector<double,3> wektor_trans_LP,wektor_trans_PP,wektor_trans_LT,wektor_trans_PT,wektor_trans_korpusu;
+wektor_trans_LP[0]=5; wektor_trans_LP[1]=4;wektor_trans_LP[2]=5;
+wektor_trans_PP[0]=5; wektor_trans_PP[1]=-4;wektor_trans_PP[2]=5;
+wektor_trans_LT[0]=-5; wektor_trans_LT[1]=4;wektor_trans_LT[2]=5;
+wektor_trans_PT[0]=-5; wektor_trans_PT[1]=-4;wektor_trans_PT[2]=5;  
+
+  //----------------------------------------------------------
+  // Korpus drona jest podniesiony o 4. Dzięki temu początek układu
+  // współrzędnych drona jest na środku dolnej podstawy korpusu.
+  //
+  wektor_trans_korpusu[0]=0;wektor_trans_korpusu[1]=0;wektor_trans_korpusu[2]=2;
+
+  if (!TworzKorpus(PLIK_ROBOCZY__DRON1_KORPUS,0,wektor_trans_korpusu)) return false;
+
+  if (!TworzRotor(PLIK_ROBOCZY__DRON1_ROTOR1,
+		    KatObrotuRotora_st,wektor_trans_LP)) return false;
+  if (!TworzRotor(PLIK_ROBOCZY__DRON1_ROTOR2,
+		    -KatObrotuRotora_st,wektor_trans_PP)) return false;
+  if (!TworzRotor(PLIK_ROBOCZY__DRON1_ROTOR3,
+		    -KatObrotuRotora_st,wektor_trans_LT)) return false;
+  if (!TworzRotor(PLIK_ROBOCZY__DRON1_ROTOR4,
+		     KatObrotuRotora_st,wektor_trans_PT)) return false;
+#define SKOK_OBROTU_ROTOROW_stopnie  10
+  KatObrotuRotora_st += SKOK_OBROTU_ROTOROW_stopnie;
+  return true;
+}
+
+/*!
+ * \brief Ustawia dron w żądanej pozycji i orientacji.
+ *
+ * Dron zostaje przeniesiony do wskazanej pozycji. Jego orientacja zostaje zmieniona
+ * zgodnie z zadanym kątem.
+ *
+ * \param[in] KatOrDrona_st - kąta orientacji drona. Jest to kąt względem osi OZ.
+ *                            Wartość orientacji drona wyrażona jest w stopniach.
+ * \param[in] Pozycja_drona - współrzędne pozycji drona.
+ *
+ * \retval true - gdy operacja powiedzie się,
+ * \retval false - w przypadku przeciwnym.
+ *                 Może się to zdarzyć, gdy niepowiedzie się otwarcie jednego z plików,
+ *                 z których korzysta ta funkcja,
+ *                 lub niepowodzenia odczytu lub zapisu do wspomnianych plików.
+ */
+bool PrzemiescDrona(double KatOrDrona_st, Vector<double,3> &Pozycja_drona)
+{
+Vector<double,3> wektor_jednostkowy;
+  wektor_jednostkowy[0]=1; wektor_jednostkowy[1]=1;wektor_jednostkowy[2]=1;
+
+  if (!TworzDrona()) return false;
+  //--------------------------------------------------
+  // Transformacja elementów drona do właściwej pozycji
+  //
+  const char *NazwyPlikowRoboczych[] = { PLIK_ROBOCZY__DRON1_KORPUS, PLIK_ROBOCZY__DRON1_ROTOR1,
+					 PLIK_ROBOCZY__DRON1_ROTOR2, PLIK_ROBOCZY__DRON1_ROTOR3,
+					 PLIK_ROBOCZY__DRON1_ROTOR4, nullptr
+                                        };
+  const char *NazwyPlikowWlasciwych[] = { PLIK_WLASCIWY__DRON1_KORPUS, PLIK_WLASCIWY__DRON1_ROTOR1,
+					 PLIK_WLASCIWY__DRON1_ROTOR2, PLIK_WLASCIWY__DRON1_ROTOR3,
+					 PLIK_WLASCIWY__DRON1_ROTOR4, nullptr
+                                        };
+  
+  assert(sizeof(NazwyPlikowRoboczych) == sizeof(NazwyPlikowWlasciwych));
+
+  for (unsigned int Idx = 0; NazwyPlikowRoboczych[Idx] != nullptr; ++Idx) {
+    if (!TworzOpisPrzetranformowanejBryly(NazwyPlikowRoboczych[Idx],
+					 NazwyPlikowWlasciwych[Idx],
+					 KatOrDrona_st,
+				     wektor_jednostkowy,
+				     Pozycja_drona)) return false;
+  }
+  return true;
+}
+
+
+#define PLIK_TRASY_PRZELOTU "dat/trasa_przelotu.dat"
+
+/*!
+ * \brief Dodaje trasę przelotu.
+ *
+ * Tworzony jest plik z trasę przelotu w postaci łamanej.
+ * Nazwa pliku zostaje dodana do łącza do gnuplota.
+ * Dzięki temu dane zawarte w tym pliku zostaną użyte przez
+ * gnuplota do narysowania łamanej.
+ *
+ * \retval true - gdy operacja powiedzie się,
+ * \retval false - w przypadku przeciwnym.
+ *                 Może się to zdarzyć, gdy niepowiedzie się otwarcie plików,
+ *                 do którego zapisywane są współrzędne łamanej modelującej ścieżkę
+ *                 przelotu drona, lub niepowodzenia zapisu do tego pliku.
+ */
+bool DodajTrasePrzelotu(PzG::LaczeDoGNUPlota &Lacze)
+{
+  std::ofstream  StrmWy(PLIK_TRASY_PRZELOTU);
+
+  if (!StrmWy.is_open()) {
+    std::cerr << std::endl
+	 << " Nie mozna otworzyc do zapisu pliku: " << PLIK_TRASY_PRZELOTU << std::endl
+	 << std::endl;
+    return false;
+  }
+
+  StrmWy << "20  20   0" << std::endl
+	 << "20  20  80" << std::endl
+	 << "150 150 80" << std::endl
+	 << "150 150  0" << std::endl;
+  Lacze.DodajNazwePliku(PLIK_TRASY_PRZELOTU);
+  return !StrmWy.fail();
+}
+
+
+
 
 
 
