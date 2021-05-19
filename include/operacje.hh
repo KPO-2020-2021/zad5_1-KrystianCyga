@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <cmath>
 #include <cassert>
+#include <unistd.h>
 
 #include "vector.hh"
 #include "matrix.hh"
@@ -358,6 +359,68 @@ bool DodajTrasePrzelotu(PzG::LaczeDoGNUPlota &Lacze)
 	 << "150 150  0" << std::endl;
   Lacze.DodajNazwePliku(PLIK_TRASY_PRZELOTU);
   return !StrmWy.fail();
+}
+
+/*!
+ * \brief Anicja przelotu drona.
+ *
+ * Animacja przelotu drona.
+ * Animacja ta jest robiona na "sztywno"
+ *
+ * \retval true - gdy operacja powiedzie się,
+ * \retval false - w przypadku przeciwnym.
+ *                 Może się to zdarzyć, gdy niepowiedzie się otwarcie jednego z plików,
+ *                 z których korzysta ta funkcja,
+ *                 lub niepowodzenia odczytu lub zapisu do wspomnianych plików.
+ */
+bool AnimacjaLotuDrona(PzG::LaczeDoGNUPlota &Lacze)
+{
+  Vector<double,3> pozycja_drona;
+  pozycja_drona[0] = 20; pozycja_drona[1] = 20; pozycja_drona[2] = 0;
+  double KatOr_st = 0;
+
+  //-------------------------------------
+  // Wznoszenie ...
+  //
+  std::cout << std::endl << "Wznoszenie ... " << std::endl;
+  for (; pozycja_drona[2] <= 80; pozycja_drona[2] += 2) {
+    if (!PrzemiescDrona(KatOr_st,pozycja_drona)) return false;
+    usleep(100000); // 0.1 ms
+    Lacze.Rysuj();
+  }
+  pozycja_drona[2] -= 2;
+  
+  std::cout << "Zmiana orientacji ... " << std::endl;
+  for (; KatOr_st <= 45; KatOr_st += 5) {
+    if (!PrzemiescDrona(KatOr_st,pozycja_drona)) return false;
+    usleep(100000);
+    Lacze.Rysuj();
+  }
+  KatOr_st -= 5;
+
+  //-------------------------------------
+  // Lot do przodu ...
+  //  
+  std::cout << "Lot do przodu ... " << std::endl;
+  for (; pozycja_drona[0] <= 150; pozycja_drona[0] += 1, pozycja_drona[2] += 1) {
+    if (!PrzemiescDrona(KatOr_st,pozycja_drona)) return false;
+    usleep(100000);
+    Lacze.Rysuj();
+  }  
+  pozycja_drona[0] -= 1, pozycja_drona[2] -= 1;
+
+
+  //-------------------------------------
+  // Opadanie ...
+  //
+  std::cout << "Opadanie ... " << std::endl;
+  for (; pozycja_drona[2] >= 0; pozycja_drona[2] -= 2) {
+    if (!PrzemiescDrona(KatOr_st,pozycja_drona)) return false;
+    usleep(100000); // 0.1 ms
+    Lacze.Rysuj();
+  }
+
+  return true;
 }
 
 
