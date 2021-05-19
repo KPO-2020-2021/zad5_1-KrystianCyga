@@ -14,7 +14,7 @@ int main()
 {
   PzG::LaczeDoGNUPlota  Lacze;
 
-  Lacze.DodajNazwePliku("bryly_wzorcowe/plaszczyzna.dat");
+  Lacze.DodajNazwePliku("../bryly_wzorcowe/plaszczyzna.dat");
   Lacze.DodajNazwePliku(PLIK_WLASCIWY__DRON1_KORPUS);
   Lacze.DodajNazwePliku(PLIK_WLASCIWY__DRON1_ROTOR1);
   Lacze.DodajNazwePliku(PLIK_WLASCIWY__DRON1_ROTOR2);
