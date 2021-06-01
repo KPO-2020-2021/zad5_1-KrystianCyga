@@ -95,14 +95,24 @@ std::ostream &operator<<(std::ostream &out, Prostopadloscian<double> const &pros
 std::ofstream &operator<<(std::ofstream &of, Prostopadloscian<double> const &prost)
 {
   of << std::setprecision(10) << std::fixed;
-  for (unsigned int i = 0; i < 8; i++)
+    of << prost[0] << std::endl;
+    of << prost[1] << std::endl;
+    of << prost[2] << std::endl;
+    of << prost[3] << std::endl;
+    of << std::endl;
+  for (unsigned int i = 4; i < 9; ++++i)
   {
+    of << prost[0] << std::endl;
     of << prost[i] << std::endl;
-    if ((i + 1) % 2 == 0)
-    {
-      of << std::endl;
-    }
+    of << prost[i+1] << std::endl;
+    of << prost[3] << std::endl;
+    of << std::endl;
   }
+    of << prost[0] << std::endl;
+    of << prost[1] << std::endl;
+    of << prost[2] << std::endl;
+    of << prost[3] << std::endl;
+    of << std::endl;
   return of;
 }
 
@@ -281,9 +291,6 @@ bool Prostopadloscian<double>::zapis(const std::string &nazwa) const
   }
 
   plik << *this;
-  plik << this->wektor[0];
-  plik << std::endl;
-  plik << this->wektor[1];
   if (plik.fail())
   {
     plik.close();
