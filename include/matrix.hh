@@ -33,7 +33,7 @@ class Matrix{
 
     Matrix(); // Konstruktor klasy
 
-    Vector<double,WYMIAR> operator*(Vector<double,WYMIAR> tmp); // Operator mnożenia przez wektor
+    Vector<double,3> operator*(Vector<double,3> tmp); // Operator mnożenia przez wektor
 
     Matrix operator+(Matrix tmp);
 
@@ -45,7 +45,7 @@ class Matrix{
 
     Matrix Mobrot3D_tworzenie(int kat,char os);
 
-    Matrix Mobrot_4x4(double kat[],int os[]);
+    Matrix Mobrot_4x4(const double kat[],const double os[]);
 
     Matrix transpozycja() const ;
 
@@ -102,18 +102,19 @@ Matrix<WYMIAR>::Matrix(double tmp[WYMIAR][WYMIAR])
  *     \return Iloczyn dwoch skladnikow przekazanych jako wektor.                   
  */
 template <int WYMIAR>
-Vector<double,WYMIAR> Matrix<WYMIAR>::operator*(Vector<double,WYMIAR> tmp)
+Vector<double,3> Matrix<WYMIAR>::operator*(Vector<double,3> tmp)
 {
-    Vector<double,WYMIAR> result;
-    for (int i = 0; i < WYMIAR; ++i)
+    Vector<double,3> result;
+    for (int i = 0; i < WYMIAR-1; ++i)
     {
-        for (int j = 0; j < WYMIAR; ++j)
+        for (int j = 0; j < WYMIAR-1; ++j)
         {
             result[i] += value[i][j] * tmp[j];
         }
     }
     return result;
 }
+
 
 /*!*****************************************************************************
  *  \brief Funktor macierzy                                                          
@@ -398,7 +399,7 @@ Matrix<WYMIAR> Matrix<WYMIAR>::transpozycja() const
  *    \return  Macierz obrotu 4x4                                                
  */
 template<int WYMIAR>
-Matrix<WYMIAR> Matrix<WYMIAR>::Mobrot_4x4(double kat[],int os[])
+Matrix<WYMIAR> Matrix<WYMIAR>::Mobrot_4x4(const double kat[],const double os[])
 {
     double rad[3] ={0,0,0};
     for (int i = 0; i < 3; i++)

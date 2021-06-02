@@ -31,7 +31,7 @@ vector3d Prostopadloscian::operator[](const int punkt) const
  */
 std::ostream &operator<<(std::ostream &out, Prostopadloscian const &prost)
 {
-  out << std::fixed << std::setprecision(10);
+  out << std::fixed << std::setprecision(5);
   for (unsigned int i = 0; i < 8; i++)
   {
     out << prost[i] << std::endl;
@@ -54,7 +54,7 @@ std::ostream &operator<<(std::ostream &out, Prostopadloscian const &prost)
  */
 std::ofstream &operator<<(std::ofstream &of, Prostopadloscian const &prost)
 {
-  of << std::setprecision(10) << std::fixed;
+  of << std::setprecision(5) << std::fixed;
     of << prost[0] << std::endl;
     of << prost[1] << std::endl;
     of << prost[2] << std::endl;

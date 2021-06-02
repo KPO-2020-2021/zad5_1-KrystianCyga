@@ -28,6 +28,7 @@ class graniastoslup : public brylageo
     void ustaw_srodek();
     bool wczytaj(const std::string &nazwa);
     bool zapis(const std::string &nazwa) const;
-    bool owektor(vector3d &wek);
+    graniastoslup owektor(vector3d &wek);
+    graniastoslup obrot(const double kat[], const unsigned int ilosc, const double os[]);
 
 };

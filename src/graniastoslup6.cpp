@@ -1,5 +1,6 @@
 #include <graniastoslup6.hh>
 
+
 graniastoslup::graniastoslup(){
   
   double tab[3] = {1, 1,1};
@@ -60,6 +61,7 @@ bool  graniastoslup::wczytaj(const std::string &nazwa){
     }
   }
   plik.close();
+  ustaw_srodek();
   return true;
 
 }
@@ -117,12 +119,35 @@ bool graniastoslup::zapis(const std::string &nazwa) const
   return true;
 }
 
-bool graniastoslup::owektor(vector3d &wek){
-  if (wek.modul() == 0)
-    return false;
-  for (unsigned int i = 0; i < 14; i++)
+
+
+graniastoslup graniastoslup::obrot(const double kat[], const unsigned int ilosc, const double os[]){
+Matrix<4> obrotu;
+obrotu.Mobrot_4x4(kat,os);
+
+for(unsigned int i=0;i<ilosc;++i){
+  for(int k=0;k<13;++k){
+    obrotu*wierzcholek[k];
+  }
+}
+return *this;
+}
+
+graniastoslup graniastoslup::owektor(vector3d &wek){
+  if (wek.modul() == 0) std::cerr<<"Modul = 0\n";
+    
+  for (unsigned int i = 0; i < 13; i++)
   {
     wierzcholek[i] = wierzcholek[i] + wek;
   }
-  return true;
+  polozenie=polozenie+wek;
+
+  double kat[3]={0,0,5};
+  double pozycja[3];
+  pozycja[0]=polozenie[0];
+  pozycja[1]=polozenie[1];
+  pozycja[2]=polozenie[2];
+  this->obrot(kat,1,pozycja);
+
+  return *this;
 }

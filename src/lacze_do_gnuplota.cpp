@@ -14,7 +14,7 @@
 #pragma implementation
 #endif
 
-#include "lacze_do_gnuplota.hh"
+#include "../include/lacze_do_gnuplota.hpp"
 
 using namespace std;
 
@@ -498,9 +498,9 @@ namespace PzG {
          KomunikatBledu("### Blad zamkniecia duplikatu kanalu wyjsciowego.");
          exit(1);
        }
-       char Tab[3];
-       read(STDIN,Tab,1);
-       write(STDOUT,"\n",1); 
+       //char Tab[3];
+      // read(STDIN,Tab,1);
+      // write(STDOUT,"\n",1); 
        const char *Comm;
 
        execlp(Comm = "gnuplot","gnuplot",NULL);

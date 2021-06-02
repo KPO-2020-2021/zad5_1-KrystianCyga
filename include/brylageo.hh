@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include "vector3d.hh"
+#include "matrix.hh"
 
 
 class brylageo
