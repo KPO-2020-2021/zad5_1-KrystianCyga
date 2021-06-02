@@ -3,17 +3,17 @@
 brylageo::brylageo(){
     NazwaPlikuBrylyWzorc="";
     NazwaPlikubryluFinalnej="";
-    Vector<double,3> elo;
+    vector3d elo;
     skala=elo;
 }
 
-brylageo::brylageo(const std::string &nazwa1,const std::string &nazwa2,const Vector<double,3> &skala_uzyt){
+brylageo::brylageo(const std::string &nazwa1,const std::string &nazwa2,const vector3d &skala_uzyt){
     NazwaPlikuBrylyWzorc=nazwa1;
     NazwaPlikubryluFinalnej=nazwa2;
     skala=skala_uzyt;
 }
 
-void brylageo::skaluj(const Vector<double,3> &skala_uzyt) {
+void brylageo::skaluj(const vector3d &skala_uzyt) {
     skala=skala_uzyt;
 }
 

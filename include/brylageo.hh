@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <fstream>
 
-#include "vector.hh"
+#include "vector3d.hh"
 
 
 class brylageo
@@ -27,7 +27,7 @@ std::string NazwaPlikubryluFinalnej;
 /*! 
 * \brief Skala figury w postaci wektora
 */
-Vector<double,3> skala;
+vector3d skala;
 
 public:
 /*!
@@ -43,7 +43,7 @@ brylageo();
  *      \param[in] skala -  skala z klasy brylageo
  *      \post Ustawia nazwy na odpowiednie podane przez uzytkownika
  */
-brylageo(const std::string &nazwa1,const std::string &nazwa2,const Vector<double,3>&skala);
+brylageo(const std::string &nazwa1,const std::string &nazwa2,const vector3d&skala);
 /*!
  *  \brief Metoda zapisujaca skale                                            
  *                                                                    
@@ -51,7 +51,7 @@ brylageo(const std::string &nazwa1,const std::string &nazwa2,const Vector<double
  *                                                                        
  *     \post Zmiana skali na te podana przez uzytkownika                                
  */
-void skaluj(const Vector<double,3> &skala);
+void skaluj(const vector3d &skala);
 /*!
  *  \brief Metoda zapisujaca nazwe pliku wzorcowego bryly                                            
  *                                                                    

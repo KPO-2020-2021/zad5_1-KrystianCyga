@@ -3,7 +3,7 @@
 graniastoslup::graniastoslup(){
   
   double tab[3] = {1, 1,1};
-  Vector<double,3> tmp(tab);
+  vector3d tmp(tab);
 
   for(int i;i<12;++i)
   {
@@ -17,7 +17,7 @@ graniastoslup::graniastoslup(){
 void graniastoslup::ustaw_srodek(){
 
   double tab[3] = {1, 1,1};
-  Vector<double,3> tmp(tab);
+  vector3d tmp(tab);
 
   tmp=wierzcholek[8]-wierzcholek[0];
   polozenie=wierzcholek[0]+tmp*0.5;
@@ -114,5 +114,15 @@ bool graniastoslup::zapis(const std::string &nazwa) const
     }
 
   plik.close();
+  return true;
+}
+
+bool graniastoslup::owektor(vector3d &wek){
+  if (wek.modul() == 0)
+    return false;
+  for (unsigned int i = 0; i < 14; i++)
+  {
+    wierzcholek[i] = wierzcholek[i] + wek;
+  }
   return true;
 }

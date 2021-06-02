@@ -7,12 +7,12 @@ class graniastoslup : public brylageo
     /*!
     * \brief Wektor bedacy srodkiem symetrii wierzcholkow graniastoslupa 
     */
-    Vector<double,3> polozenie;
+    vector3d polozenie;
     double orientacja;
     /*!
     * \brief Wektory bedace wierzcholkami graniastoslupa 
     */
-    Vector<double,3> wierzcholek[14];
+    vector3d wierzcholek[14];
 
     public:
 
@@ -28,5 +28,6 @@ class graniastoslup : public brylageo
     void ustaw_srodek();
     bool wczytaj(const std::string &nazwa);
     bool zapis(const std::string &nazwa) const;
+    bool owektor(vector3d &wek);
 
 };

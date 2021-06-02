@@ -3,7 +3,7 @@
 
 dron::dron(){
 double tab[3] = {1, 1,1};
-Vector<double,3> tmp(tab);
+vector3d tmp(tab);
 
 polozenie=tmp;
 orientacja=1;
@@ -11,7 +11,7 @@ orientacja=1;
 
 bool dron::oblicz_zapisz_korpus(const char* nazwa){
     
-    this->korpus.wczytaj(nazwa);
+    korpus.wczytaj(nazwa);
     return true ;
 }
 

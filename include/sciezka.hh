@@ -4,7 +4,7 @@
 
 class Sciezka : public brylageo
 {
-    Vector<double,3> punkty[4];
+    vector3d punkty[4];
 
 public:
     

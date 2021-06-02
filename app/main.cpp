@@ -8,6 +8,8 @@
 #include "../include/dron.hh"
 #include <string>
 #include "lacze_do_gnuplota.hh"
+#include "vector3d.hh"
+#include "Prostopadloscian.hh"
 
 int main()
 {
@@ -21,18 +23,13 @@ Lacze.ZmienTrybRys(PzG::TR_3D);
 
   Lacze.UstawRotacjeXZ(64,65); // Tutaj ustawiany jest widok
 
-graniastoslup gran;
-Prostopadloscian<double> korpus;
 
 dron dron1;
 
 
+dron1.oblicz_zapisz_korpus("../datasets/PlikRoboczy_Dron1_Korpus.dat");
+dron1.oblicz_zapisz_rotor("../datasets/PlikRoboczy_Dron1_Rotor1.dat",1);
 
-korpus.wczytaj("../datasets/PlikRoboczy_Dron1_Korpus.dat");
-korpus.zapis("../datasets/PlikRoboczy_Dron1_Korpus_modyf.dat");
-
-gran.wczytaj("../datasets/PlikRoboczy_Dron1_Rotor1.dat");
-gran.zapis("../datasets/PlikRoboczy_Dron1_Rotor1_modyf.dat");
 
 
 Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor1_modyf.dat");

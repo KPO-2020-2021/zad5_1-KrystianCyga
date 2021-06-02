@@ -7,18 +7,17 @@
 #include <cassert>
 #include "string"
 
-
 #include "brylageo.hh"
-#include "cuboid.hh"
 #include "graniastoslup6.hh"
 #include "lacze_do_gnuplota.hh"
+#include "Prostopadloscian.hh"
 
 class dron : brylageo
 {
-    Vector<double,3> polozenie;
+    vector3d polozenie;
     double orientacja;
 
-    cuboid korpus;
+    Prostopadloscian korpus;
     graniastoslup rotor[4];
 
 
