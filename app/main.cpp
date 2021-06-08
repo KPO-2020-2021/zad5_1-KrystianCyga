@@ -17,9 +17,9 @@ PzG::LaczeDoGNUPlota  Lacze;
 Lacze.ZmienTrybRys(PzG::TR_3D);
 Lacze.Inicjalizuj();
 
-  Lacze.UstawZakresX(0, 50);
-  Lacze.UstawZakresY(0, 50);
-  Lacze.UstawZakresZ(0, 50);
+  Lacze.UstawZakresX(-10, 120);
+  Lacze.UstawZakresY(-10, 120);
+  Lacze.UstawZakresZ(-10, 120);
 
 
   Lacze.UstawRotacjeXZ(64,65); // Tutaj ustawiany jest widok
@@ -41,13 +41,13 @@ dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Rotor3_modyf.dat",2);
 dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Rotor4_modyf.dat",3);
 
 Lacze.DodajNazwePliku("../datasets/plaszczyzna.dat");
-Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Korpus.dat");
-Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor1.dat");
-Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor2.dat");
-Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor3.dat");
-Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor4.dat");
+Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Korpus_modyf.dat");
+//Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor1_modyf.dat");
+//Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor2_modyf.dat");
+//Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor3_modyf.dat");
+//Lacze.DodajNazwePliku("../datasets/PlikRoboczy_Dron1_Rotor4_modyf.dat");
 
-/*
+
 std::cin.ignore(10000,'\n');
 Lacze.Rysuj();
 vector3d wektor;
@@ -55,14 +55,14 @@ wektor[0]=10;
 wektor[1]=10;
 wektor[2]=10;
 std::cin.ignore(10000,'\n');
-dron1.owektor(wektor);
+//dron1.owektor(wektor);
 
 dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Korpus_modyf.dat");
 dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Rotor1_modyf.dat",0);
 dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Rotor2_modyf.dat",1);
 dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Rotor3_modyf.dat",2);
 dron1.zapisz_dopliku("../datasets/PlikRoboczy_Dron1_Rotor4_modyf.dat",3);
-*/
+
 
 Lacze.Rysuj();
 

@@ -25,7 +25,7 @@
 class Prostopadloscian
 {
 
-  vector3d wektor[8];
+  vector3d wektor[10];
 
 public:
   Prostopadloscian();

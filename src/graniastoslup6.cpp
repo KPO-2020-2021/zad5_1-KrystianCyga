@@ -78,6 +78,7 @@ bool graniastoslup::zapis(const std::string &nazwa) const
   std::ofstream plik;
 
   plik.open(nazwa, std::ofstream::out);
+  plik << std::setprecision(5) << std::fixed;
   if (plik.is_open() == false)
   {
     return false;

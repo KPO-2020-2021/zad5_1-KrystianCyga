@@ -55,24 +55,31 @@ std::ostream &operator<<(std::ostream &out, Prostopadloscian const &prost)
 std::ofstream &operator<<(std::ofstream &of, Prostopadloscian const &prost)
 {
   of << std::setprecision(5) << std::fixed;
-    of << prost[0] << std::endl;
-    of << prost[1] << std::endl;
-    of << prost[2] << std::endl;
-    of << prost[3] << std::endl;
-    of << std::endl;
-  for (unsigned int i = 4; i < 9; ++++i)
-  {
-    of << prost[0] << std::endl;
-    of << prost[i] << std::endl;
-    of << prost[i+1] << std::endl;
-    of << prost[3] << std::endl;
-    of << std::endl;
-  }
-    of << prost[0] << std::endl;
-    of << prost[1] << std::endl;
-    of << prost[2] << std::endl;
-    of << prost[3] << std::endl;
-    of << std::endl;
+  of << prost[0]<< std::endl;
+  of << prost[1]<< std::endl;
+  of << prost[2]<< std::endl;
+  of << prost[3]<< std::endl;
+  of << std::endl;
+  of << prost[0]<< std::endl;
+  of << prost[4]<< std::endl;
+  of << prost[5]<< std::endl;
+  of << prost[3]<< std::endl;
+  of << std::endl;
+  of << prost[0]<< std::endl;
+  of << prost[6]<< std::endl;
+  of << prost[7]<< std::endl;
+  of << prost[3]<< std::endl;
+  of << std::endl;
+  of << prost[0]<< std::endl;
+  of << prost[8]<< std::endl;
+  of << prost[9]<< std::endl;
+  of << prost[3]<< std::endl;
+  of << std::endl;
+  of << prost[0]<< std::endl;
+  of << prost[1]<< std::endl;
+  of << prost[2]<< std::endl;
+  of << prost[3]<< std::endl;
+  of << std::endl;
   return of;
 }
 
@@ -272,15 +279,30 @@ bool Prostopadloscian::wczytaj(const std::string &nazwa)
     return false;
   }
 
-  for (unsigned int i = 0; i < 8; i++)
-  {
-    plik >> wektor[i];
+  plik >> wektor[0];
+  plik >> wektor[1];
+  plik >> wektor[2];
+  plik >> wektor[3];
+  plik >> wektor[0];
+  plik >> wektor[4];
+  plik >> wektor[5];
+  plik >> wektor[3];
+  plik >> wektor[0];
+  plik >> wektor[6];
+  plik >> wektor[7];
+  plik >> wektor[3];
+  plik >> wektor[0];
+  plik >> wektor[8];
+  plik >> wektor[9];
+  plik >> wektor[3];
+
     if (plik.fail())
     {
       plik.close();
       return false;
     }
-  }
+
+
   plik.close();
   return true;
 }
@@ -296,7 +318,7 @@ bool Prostopadloscian::owektor(vector3d &wek)
 {
   if (wek.modul() == 0)
     return false;
-  for (unsigned int i = 0; i < 8; i++)
+  for (unsigned int i = 0; i < 10; i++)
   {
     wektor[i] = wektor[i] + wek;
   }
