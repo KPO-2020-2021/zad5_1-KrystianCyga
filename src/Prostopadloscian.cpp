@@ -121,21 +121,37 @@ Prostopadloscian::Prostopadloscian()
  *     \param[in] os os obrotu                                                         
  *     \return Obrocony prostopadloscian                                                              
  */
-Prostopadloscian Prostopadloscian::obrot(const double kat, const unsigned int ilosc, const int os)
+Prostopadloscian Prostopadloscian::obrot(const double kat)
 {
   Matrix<3> Mrotacji;
 
-  Mrotacji.Mobrot3D_tworzenie(kat, os);
+  Mrotacji.Mobrot3D_tworzenie(kat,'z');
 
-  for (unsigned int j = 0; j < ilosc; j++)
-  {
-    for (unsigned int i = 0; i < 8; i++)
+    for (unsigned int i = 0; i < 10; i++)
     {
       this->wektor[i] = Mrotacji * this->wektor[i];
     }
-  }
+  
 
   return *this;
+}
+
+Prostopadloscian Prostopadloscian::obrot2(const double kat,vector3d &polozenie){
+  
+  vector3d WynikObrotu;
+  WynikObrotu[2]=0;
+  double Kat_rad = (kat * M_PI / 180);
+  double sn = sin(Kat_rad), cn = cos(Kat_rad);
+  WynikObrotu[0] = polozenie[0] * cn - polozenie[1] * sn;
+  WynikObrotu[1] = polozenie[0] * sn + polozenie[1] * cn;
+  polozenie[0] = WynikObrotu[0];
+  polozenie[1] = WynikObrotu[1];
+
+  for (unsigned int i = 0; i < 10; i++)
+    {
+      wektor[i] = wektor[i] + WynikObrotu;
+    } 
+    return *this;
 }
 
 /*!
@@ -323,4 +339,19 @@ bool Prostopadloscian::owektor(vector3d &wek)
     wektor[i] = wektor[i] + wek;
   }
   return true;
+}
+
+void Prostopadloscian::ustal_srodek(){
+vector3d tmp;
+tmp[0]=0;tmp[1]=0;tmp[2]=0;
+
+    tmp[0] = (wektor[0][0] + wektor[3][0]) / 2;
+    tmp[1] = (wektor[0][1] + wektor[3][1]) / 2;
+    tmp[2] = wektor[2][2];
+
+polozenie=tmp;
+}
+
+vector3d Prostopadloscian::daj_srodek(){
+  return polozenie;
 }

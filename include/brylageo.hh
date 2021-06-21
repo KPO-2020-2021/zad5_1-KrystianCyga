@@ -28,7 +28,8 @@ std::string NazwaPlikubryluFinalnej;
 /*! 
 * \brief Skala figury w postaci wektora
 */
-vector3d skala;
+vector3d skala,trans;
+double KatOrientacji_st;
 
 public:
 /*!
@@ -69,5 +70,10 @@ void pobierz_nazwe_wzorca(const std::string &nazwa1);
  *     \post Zmiana NazwaPlikubryluWzorc na ta podana przez uzytkownika                                
  */
 void pobierz_nazwe_final(const std::string &nazwa2);
+void ObrocWzgledemOsiOZ(double KatObrotu_st, vector3d &Polozenie);
+void TransformujWspolrzednePunktu(vector3d &Polozenie);
+void Skaluj(vector3d &Polozenie);
+void ustaw_kat(double kat){KatOrientacji_st=kat;};
+void ustaw_trans(vector3d &Polozenie){trans=Polozenie;};
 
 };

@@ -105,9 +105,9 @@ template <int WYMIAR>
 Vector<double,3> Matrix<WYMIAR>::operator*(Vector<double,3> tmp)
 {
     Vector<double,3> result;
-    for (int i = 0; i < WYMIAR-1; ++i)
+    for (int i = 0; i < WYMIAR; ++i)
     {
-        for (int j = 0; j < WYMIAR-1; ++j)
+        for (int j = 0; j < WYMIAR; ++j)
         {
             result[i] += value[i][j] * tmp[j];
         }

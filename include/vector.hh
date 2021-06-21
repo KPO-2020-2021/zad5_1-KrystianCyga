@@ -36,9 +36,9 @@ public:
 
     double dlugosc(const Vector<double,ROZMIAR> &drugi) const ;
 
-    Vector operator+(const Vector<T,ROZMIAR> &v);
+    Vector operator+(const Vector<T,ROZMIAR> &v) const;
 
-    Vector operator-(const Vector<T,ROZMIAR> &v);
+    Vector operator-(const Vector<T,ROZMIAR> &v) const;
 
     Vector operator*(const T &tmp);
 
@@ -198,12 +198,12 @@ T Vector<T,ROZMIAR>::modul()
  *     \return Sume wektorow                                                                  
  */
 template <typename T,unsigned int ROZMIAR>
-Vector<T,ROZMIAR> Vector<T,ROZMIAR>::operator+(const Vector<T,ROZMIAR> &v)
+Vector<T,ROZMIAR> Vector<T,ROZMIAR>::operator+(const Vector<T,ROZMIAR> &v) const
 {
     Vector result;
     for (unsigned int i = 0; i < ROZMIAR; ++i)
     {
-        result[i] = wspolrzedne[i] += v[i];
+        result[i] = wspolrzedne[i] + v[i];
     }
     return result;
 }
@@ -215,12 +215,12 @@ Vector<T,ROZMIAR> Vector<T,ROZMIAR>::operator+(const Vector<T,ROZMIAR> &v)
  *     \return Roznice wektorow                                                                  
  */
 template <typename T,unsigned int ROZMIAR>
-Vector<T,ROZMIAR> Vector<T,ROZMIAR>::operator-(const Vector<T,ROZMIAR> &v)
+Vector<T,ROZMIAR> Vector<T,ROZMIAR>::operator-(const Vector<T,ROZMIAR> &v) const
 {
     Vector result;
     for (unsigned int i = 0; i < ROZMIAR; ++i)
     {
-        result[i] = wspolrzedne[i] -= v[i];
+        result[i] = wspolrzedne[i] - v[i];
     }
     return result;
 }
@@ -238,7 +238,7 @@ Vector<T,ROZMIAR> Vector<T,ROZMIAR>::operator*(const T &tmp)
     Vector result;
     for (unsigned int i = 0; i < ROZMIAR; ++i)
     {
-        result[i] = wspolrzedne[i] *= tmp;
+        result[i] = wspolrzedne[i] * tmp;
     }
     return result;
 }
