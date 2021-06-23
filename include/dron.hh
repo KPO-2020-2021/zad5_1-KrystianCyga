@@ -42,7 +42,7 @@ class dron : brylageo
 
     Prostopadloscian korpus;
     graniastoslup rotor[4];
-
+    vector3d srodek,Vorien;
     public:
 
     dron();
@@ -50,22 +50,24 @@ class dron : brylageo
     bool oblicz_zapisz_korpus(const int numer_drona);
     bool oblicz_zapisz_rotor(const int numer_drona ,const int numer_rotora);
     bool owektor(vector3d &wek);
+    bool owektor_m(vector3d &wek);
     bool zapisz_dopliku(const int numer_drona);
     bool zapisz_dopliku(const int numer_drona,const int numer_rotora);
     void zapisz_drona(const int numer_drona);
     bool tworz_drona();
     void ustaw_srodek();
-    vector3d daj_srodek(){return trans;}
+    vector3d daj_srodek(){return srodek;}
+    vector3d daj_wektor(const int numer){return korpus[numer];}
+    void ustal_orientacje();
+    vector3d daj_orien();
 
     void dodaj_do_lacza(PzG::LaczeDoGNUPlota& Lacze,const int numer_drona);
 
-    
     void obrot(const double kat);
-    void opadanie();
-
 };
 
+void lot_do_przodu(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double kat,const double odleglosc,int numer);
 void wznoszenie(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double wysokosc,const int numer);
-
+void opadanie(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double wysokosc,const int numer);
 
 

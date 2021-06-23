@@ -30,6 +30,7 @@ std::string NazwaPlikubryluFinalnej;
 */
 vector3d skala,trans;
 double KatOrientacji_st;
+int numer_aktywnego;
 
 public:
 /*!
@@ -70,6 +71,7 @@ void pobierz_nazwe_wzorca(const std::string &nazwa1);
  *     \post Zmiana NazwaPlikubryluWzorc na ta podana przez uzytkownika                                
  */
 void pobierz_nazwe_final(const std::string &nazwa2);
+void ustaw_aktywnego(int numer){numer_aktywnego=numer;}
 void ObrocWzgledemOsiOZ(double KatObrotu_st, vector3d &Polozenie);
 void TransformujWspolrzednePunktu(vector3d &Polozenie);
 void Skaluj(vector3d &Polozenie);

@@ -184,7 +184,15 @@ graniastoslup graniastoslup::obrot(const double kat)
     return *this;
 }
 
-graniastoslup graniastoslup::owektor(vector3d &wek)
+graniastoslup graniastoslup::rotacja(const double kat){
+  vector3d pom=daj_srodek();
+  owektor_m(pom);
+  obrot(kat);
+  owektor(pom);
+  return *this;
+}
+
+bool graniastoslup::owektor(vector3d &wek)
 {
   if (wek.modul() == 0)
     std::cerr << "Modul = 0\n";
@@ -195,12 +203,21 @@ graniastoslup graniastoslup::owektor(vector3d &wek)
   }
   polozenie = polozenie + wek;
 
-  //this->obrot(5, 1,'z');
+  //rotacja(5);
 
-  return *this;
+  return true;
 }
+
+bool graniastoslup::owektor_m(vector3d &wek){
+  vector3d pom;
+  pom[0]=-wek[0];
+  pom[1]=-wek[1];
+  return owektor(pom);
+}
+
 
 vector3d graniastoslup::daj_srodek()
 {
+  ustaw_srodek();
   return polozenie;
 }

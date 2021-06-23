@@ -31,13 +31,14 @@ class Prostopadloscian
 public:
   Prostopadloscian();
   void boki();
-  Prostopadloscian obrot(const double kat, const unsigned int ilosc, const int os);
+  Prostopadloscian rotacja(const double kat);
   Prostopadloscian obrot(const double kat);
   Prostopadloscian obrot2(const double kat,vector3d &polozenie);
   vector3d operator[](const int punkt) const;
   vector3d &operator[](const int punkt);
   bool zapis(const std::string &nazwa) const;
   bool owektor(vector3d &wek);
+  bool owektor_m(vector3d &wek);
   bool wczytaj(const std::string &nazwa);
   void ustal_srodek();
   vector3d daj_srodek();

@@ -11,7 +11,17 @@ dron::dron()
 }
 
 void dron::ustaw_srodek(){
-    trans=korpus.daj_srodek();
+    this->korpus.ustal_srodek();
+    srodek=korpus.daj_srodek();
+}
+
+void dron::ustal_orientacje()
+{
+    Vorien[0]=korpus[0][0]-korpus[3][0];
+    Vorien[1]=korpus[0][1]-korpus[3][1];
+}
+vector3d dron::daj_orien(){
+    return Vorien;
 }
 
 bool dron::oblicz_zapisz_korpus(const int numer_drona)
@@ -140,9 +150,16 @@ bool dron::owektor(vector3d &wek)
     ok = korpus.owektor(wek);
     for (int i = 0; i < 4; ++i)
     {
-        rotor[i] = rotor[i].owektor(wek);
+        rotor[i].owektor(wek);
     }
     return ok;
+}
+
+bool dron::owektor_m(vector3d &wek){
+    wek[0]=wek[0]*(-1);
+    wek[1]=wek[1]*(-1);
+    wek[2]=wek[2]*(-1);
+    return owektor(wek);
 }
 
 bool dron::tworz_drona()
@@ -230,8 +247,46 @@ void wznoszenie(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double wysokosc
         rotor[3].obrot(kat);
     }
 
+    void lot_do_przodu(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double kat,const double odleglosc,int numer){
+    vector3d jednosciZ;
+    jednosciZ[0] = cos(kat);
+    jednosciZ[1] = sin(kat);
+    jednosciZ[2] = 0;
+    Lacze.Rysuj();
+    usleep(1000000);
+    std::cout<<"\nLot do przodu Trwa\n";
+    usleep(200000);
+
+    for (int i; i < odleglosc; i++)
+    {
+        latawiec.owektor(jednosciZ);
+        latawiec.zapisz_drona(numer);
+
+        usleep(150000);
+        Lacze.Rysuj();
+    }  
+    }
 
 
-    //void opadanie();
+
+    void opadanie(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double wysokosc,const int numer){
+    vector3d jednosciZ;
+    jednosciZ[0] = 0;
+    jednosciZ[1] = 0;
+    jednosciZ[2] = -1;
+    Lacze.Rysuj();
+    usleep(1000000);
+    std::cout<<"\nOpadanie Trwa\n";
+    usleep(200000);
+
+    for (int i; i < wysokosc; i++)
+    {
+        latawiec.owektor(jednosciZ);
+        latawiec.zapisz_drona(numer);
+
+        usleep(150000);
+        Lacze.Rysuj();
+    } 
+    }
 
 

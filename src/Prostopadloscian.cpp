@@ -136,6 +136,21 @@ Prostopadloscian Prostopadloscian::obrot(const double kat)
   return *this;
 }
 
+Prostopadloscian Prostopadloscian::rotacja(const double kat){
+  vector3d pom=daj_srodek();
+  owektor_m(pom);
+  obrot(kat);
+  owektor(pom);
+  return *this;
+}
+
+bool Prostopadloscian::owektor_m(vector3d &wek){
+  vector3d pom;
+  pom[0]=-wek[0];
+  pom[1]=-wek[1];
+  return owektor(pom);
+}
+
 Prostopadloscian Prostopadloscian::obrot2(const double kat,vector3d &polozenie){
   
   vector3d WynikObrotu;
