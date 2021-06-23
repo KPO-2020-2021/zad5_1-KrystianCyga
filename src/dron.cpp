@@ -153,7 +153,7 @@ bool dron::owektor(vector3d wek)
     for (int i = 0; i < 4; ++i)
     {
         rotor[i] = rotor[i].owektor(wek);
-        //rotor[i].rotacja(5);
+        rotor[i].rotacja(15);
     }
     return ok;
 }
@@ -255,11 +255,13 @@ void dron::obrot(const double kat)
 void lot_do_przodu(PzG::LaczeDoGNUPlota &Lacze, dron &latawiec, const double kat, const double odleglosc, int numer)
 {
     vector3d jednosciZ;
-    jednosciZ[0] = cos(kat);
-    jednosciZ[1] = sin(kat);
+    double kot=kat;
+    if (numer == 1){kot=kat*3;}
+    jednosciZ[0] = cos(kot);
+    jednosciZ[1] = sin(kot);
     jednosciZ[2] = 0;
     Lacze.Rysuj();
-    usleep(1000000);
+    usleep(500000);
     std::cout << "\nLot do przodu Trwa\n";
     usleep(200000);
 
@@ -292,13 +294,13 @@ void opadanie(PzG::LaczeDoGNUPlota &Lacze, dron &latawiec, const double wysokosc
     vector3d jednosciZ;
     jednosciZ[0] = 0;
     jednosciZ[1] = 0;
-    jednosciZ[2] = -1;
+    jednosciZ[2] = -0.5;
     Lacze.Rysuj();
-    usleep(1000000);
+    usleep(500000);
     std::cout << "\nOpadanie Trwa\n";
     usleep(200000);
 
-    for (int i = 0; i < wysokosc; i++)
+    for (int i = 0; i < wysokosc*2; i++)
     {
         latawiec.owektor(jednosciZ);
         latawiec.zapisz_drona(numer + 1);

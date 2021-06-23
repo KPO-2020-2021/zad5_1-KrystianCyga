@@ -181,6 +181,7 @@ graniastoslup graniastoslup::obrot(const double kat)
 graniastoslup graniastoslup::rotacja(const double kat){
   ustaw_srodek();
   vector3d pom=daj_srodek();
+  pom[2]=0;
   owektor_m(pom);
   obrot(kat);
   owektor(pom);
@@ -189,10 +190,6 @@ graniastoslup graniastoslup::rotacja(const double kat){
 
 graniastoslup graniastoslup::owektor(vector3d wek)
 {
-  
-  if (wek.modul() == 0)
-    std::cerr << "Modul = 0\n";
-
   for (unsigned int i = 0; i < 14; i++)
   {
     wierzcholek[i] = wierzcholek[i] + wek;
