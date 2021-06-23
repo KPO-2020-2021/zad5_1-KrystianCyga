@@ -49,8 +49,8 @@ class dron : brylageo
 
     bool oblicz_zapisz_korpus(const int numer_drona);
     bool oblicz_zapisz_rotor(const int numer_drona ,const int numer_rotora);
-    bool owektor(vector3d &wek);
-    bool owektor_m(vector3d &wek);
+    bool owektor(vector3d wek);
+    bool owektor_m(vector3d wek);
     bool zapisz_dopliku(const int numer_drona);
     bool zapisz_dopliku(const int numer_drona,const int numer_rotora);
     void zapisz_drona(const int numer_drona);

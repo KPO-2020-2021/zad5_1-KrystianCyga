@@ -10,17 +10,19 @@ dron::dron()
     KatOrientacji_st = 1;
 }
 
-void dron::ustaw_srodek(){
+void dron::ustaw_srodek()
+{
     this->korpus.ustal_srodek();
-    srodek=korpus.daj_srodek();
+    srodek = korpus.daj_srodek();
 }
 
 void dron::ustal_orientacje()
 {
-    Vorien[0]=korpus[0][0]-korpus[3][0];
-    Vorien[1]=korpus[0][1]-korpus[3][1];
+    Vorien[0] = korpus[0][0] - korpus[3][0];
+    Vorien[1] = korpus[0][1] - korpus[3][1];
 }
-vector3d dron::daj_orien(){
+vector3d dron::daj_orien()
+{
     return Vorien;
 }
 
@@ -144,21 +146,23 @@ bool dron::zapisz_dopliku(const int numer_drona, const int numer_rotora)
     return rotor[numer_rotora].zapis(nazwa);
 }
 
-bool dron::owektor(vector3d &wek)
+bool dron::owektor(vector3d wek)
 {
     bool ok;
     ok = korpus.owektor(wek);
     for (int i = 0; i < 4; ++i)
     {
-        rotor[i].owektor(wek);
+        rotor[i] = rotor[i].owektor(wek);
+        //rotor[i].rotacja(5);
     }
     return ok;
 }
 
-bool dron::owektor_m(vector3d &wek){
-    wek[0]=wek[0]*(-1);
-    wek[1]=wek[1]*(-1);
-    wek[2]=wek[2]*(-1);
+bool dron::owektor_m(vector3d wek)
+{
+    wek[0] = wek[0] * (-1);
+    wek[1] = wek[1] * (-1);
+    wek[2] = wek[2] * (-1);
     return owektor(wek);
 }
 
@@ -213,80 +217,93 @@ void dron::zapisz_drona(const int numer_drona)
     zapisz_dopliku(numer_drona, 3);
 }
 
-void wznoszenie(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double wysokosc,const int numer){
+void wznoszenie(PzG::LaczeDoGNUPlota &Lacze, dron &latawiec, const double wysokosc, const int numer)
+{
     vector3d jednosciZ;
     jednosciZ[0] = 0;
     jednosciZ[1] = 0;
     jednosciZ[2] = 1;
     Lacze.Rysuj();
     usleep(1000000);
-    std::cout<<"\nWznoszenie Trwa\n";
+    std::cout << "\nWznoszenie Trwa\n";
     usleep(200000);
 
-    for (int i; i < wysokosc; i++)
+    for (int i = 0; i < wysokosc; i++)
     {
         latawiec.owektor(jednosciZ);
-        latawiec.zapisz_drona(numer);
+        latawiec.zapisz_drona(numer + 1);
 
         usleep(150000);
         Lacze.Rysuj();
-    }  
+    }
 }
 
+void dron::obrot(const double kat)
+{
 
-    void dron::obrot(const double kat){
+    korpus.obrot(kat);
 
-        korpus.obrot(kat);
-        
-        rotor[0].obrot(kat);
-        
-        rotor[1].obrot(kat);
-        
-        rotor[2].obrot(kat);
-        
-        rotor[3].obrot(kat);
-    }
+    rotor[0].obrot(kat);
 
-    void lot_do_przodu(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double kat,const double odleglosc,int numer){
+    rotor[1].obrot(kat);
+
+    rotor[2].obrot(kat);
+
+    rotor[3].obrot(kat);
+}
+
+void lot_do_przodu(PzG::LaczeDoGNUPlota &Lacze, dron &latawiec, const double kat, const double odleglosc, int numer)
+{
     vector3d jednosciZ;
     jednosciZ[0] = cos(kat);
     jednosciZ[1] = sin(kat);
     jednosciZ[2] = 0;
     Lacze.Rysuj();
     usleep(1000000);
-    std::cout<<"\nLot do przodu Trwa\n";
+    std::cout << "\nLot do przodu Trwa\n";
     usleep(200000);
 
-    for (int i; i < odleglosc; i++)
+    if (numer == 1)
     {
-        latawiec.owektor(jednosciZ);
-        latawiec.zapisz_drona(numer);
+        for (int i = 0; i < odleglosc; i++)
+        {
+            latawiec.owektor_m(jednosciZ);
+            latawiec.zapisz_drona(numer + 1);
 
-        usleep(150000);
-        Lacze.Rysuj();
-    }  
+            usleep(150000);
+            Lacze.Rysuj();
+        }
     }
+    else
+    {
+        for (int i = 0; i < odleglosc; i++)
+        {
+            latawiec.owektor(jednosciZ);
+            latawiec.zapisz_drona(numer + 1);
 
+            usleep(150000);
+            Lacze.Rysuj();
+        }
+    }
+}
 
-
-    void opadanie(PzG::LaczeDoGNUPlota& Lacze,dron &latawiec,const double wysokosc,const int numer){
+void opadanie(PzG::LaczeDoGNUPlota &Lacze, dron &latawiec, const double wysokosc, const int numer)
+{
     vector3d jednosciZ;
     jednosciZ[0] = 0;
     jednosciZ[1] = 0;
     jednosciZ[2] = -1;
     Lacze.Rysuj();
     usleep(1000000);
-    std::cout<<"\nOpadanie Trwa\n";
+    std::cout << "\nOpadanie Trwa\n";
     usleep(200000);
 
-    for (int i; i < wysokosc; i++)
+    for (int i = 0; i < wysokosc; i++)
     {
         latawiec.owektor(jednosciZ);
-        latawiec.zapisz_drona(numer);
+        latawiec.zapisz_drona(numer + 1);
 
         usleep(150000);
         Lacze.Rysuj();
-    } 
     }
-
-
+}

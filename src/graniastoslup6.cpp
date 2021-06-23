@@ -1,5 +1,12 @@
 #include <graniastoslup6.hh>
 
+void graniastoslup::ustaw_srodek()
+{
+  polozenie[0] = (wierzcholek[8][0] + wierzcholek[1][0]) / 2;
+  polozenie[1] = (wierzcholek[8][1] + wierzcholek[1][1]) / 2;
+  polozenie[2] = wierzcholek[2][2] / 2;
+}
+
 graniastoslup::graniastoslup()
 {
 
@@ -15,19 +22,6 @@ graniastoslup::graniastoslup()
     skala[2] = 2;
   orientacja = 1;
   ustaw_srodek();
-}
-
-void graniastoslup::ustaw_srodek()
-{
-
-  double tab[3] = {0, 0, 0};
-  vector3d tmp(tab);
-
-  tmp[0] = (wierzcholek[8][0] + wierzcholek[1][0]) / 2;
-  tmp[1] = (wierzcholek[8][1] + wierzcholek[1][1]) / 2;
-  tmp[2] = wierzcholek[2][2] / 2;
-
-  polozenie = tmp;
 }
 
 /*!
@@ -174,17 +168,18 @@ bool graniastoslup::zapis(const std::string &nazwa) const
 graniastoslup graniastoslup::obrot(const double kat)
   {
   Matrix<3> Mrotacji;
-
+  ustaw_srodek();
   Mrotacji.Mobrot3D_tworzenie(kat,'z');
 
     for (unsigned int i = 0; i < 14; i++)
     {
-      this->wierzcholek[i] = Mrotacji * this->wierzcholek[i];
+      wierzcholek[i] = Mrotacji *wierzcholek[i];
     }
     return *this;
 }
 
 graniastoslup graniastoslup::rotacja(const double kat){
+  ustaw_srodek();
   vector3d pom=daj_srodek();
   owektor_m(pom);
   obrot(kat);
@@ -192,8 +187,9 @@ graniastoslup graniastoslup::rotacja(const double kat){
   return *this;
 }
 
-bool graniastoslup::owektor(vector3d &wek)
+graniastoslup graniastoslup::owektor(vector3d wek)
 {
+  
   if (wek.modul() == 0)
     std::cerr << "Modul = 0\n";
 
@@ -202,13 +198,10 @@ bool graniastoslup::owektor(vector3d &wek)
     wierzcholek[i] = wierzcholek[i] + wek;
   }
   polozenie = polozenie + wek;
-
-  //rotacja(5);
-
-  return true;
+  return *this;
 }
 
-bool graniastoslup::owektor_m(vector3d &wek){
+graniastoslup graniastoslup::owektor_m(vector3d wek){
   vector3d pom;
   pom[0]=-wek[0];
   pom[1]=-wek[1];

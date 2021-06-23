@@ -14,13 +14,13 @@
 #include <math.h>
 
 void menu();
-double kat_miedzy_wektorami (vector3d &pierwszy,vector3d &drugi);
+double kat_miedzy_wektorami (vector3d pierwszy,dron &wiatrak);
 bool zapisz_sciezke(const vector3d sciezka,dron &wiatrak);
 
 dron drony[2];
 vector3d sciezka,versor;
 PzG::LaczeDoGNUPlota Lacze;
-unsigned int numer_aktywnego;
+int numer_aktywnego,a;
 vector3d tmp,pom,pom2;
 double kat;
 
@@ -104,8 +104,8 @@ void menu()
 
        case 'w':
               std::cout << "Podaj numer drona: ";
-              std::cin>>numer_aktywnego;
-              numer_aktywnego=numer_aktywnego-1;
+              std::cin>>a;
+              if(a==1){numer_aktywnego=0;}else numer_aktywnego=1;
               drony[numer_aktywnego].ustaw_srodek();
               drony[numer_aktywnego].ustal_orientacje();
               break;
@@ -115,48 +115,50 @@ void menu()
               std::cin>>sciezka[0]>>sciezka[1]>>sciezka[2];
               zapisz_sciezke(sciezka,drony[numer_aktywnego]);
               
-              pom=drony[numer_aktywnego].daj_orien();
-              kat=kat_miedzy_wektorami(pom,sciezka);
-              std::cout <<kat*360/M_PI;
 
               break;
 
        case 'l':
-       
+
               wysokosc=sciezka[2];
               Lacze.Rysuj();
-              if (numer_aktywnego==0)
-              {wznoszenie(Lacze,drony[0],wysokosc,1);}
-              else if(numer_aktywnego==1)
-              {wznoszenie(Lacze,drony[1],wysokosc,2);}
 
+              drony[numer_aktywnego].zapisz_drona(numer_aktywnego+1);
+
+              wznoszenie(Lacze,drony[numer_aktywnego],wysokosc,numer_aktywnego);
               
-              pom=drony[numer_aktywnego].daj_orien();
-              kat=kat_miedzy_wektorami(pom,sciezka);
+
+              drony[numer_aktywnego].ustaw_srodek();
+              drony[numer_aktywnego].ustal_orientacje();
+
+              kat=kat_miedzy_wektorami(sciezka,drony[numer_aktywnego])-M_PI/2;
+
               tmp[0]=sciezka[0];
               tmp[1]=sciezka[1];
               stopnie = kat*360/M_PI;
-              
               pom2=drony[numer_aktywnego].daj_srodek();
 
-              for (int i = 0; i < stopnie; i++)
+              for (int i = 0; i < stopnie/2; i++)
               {
+          
               drony[numer_aktywnego].owektor_m(pom2);
-              drony[numer_aktywnego].obrot(5);
+              drony[numer_aktywnego].obrot(1);
               drony[numer_aktywnego].owektor(pom2);
-              drony[numer_aktywnego].zapisz_drona(numer_aktywnego);
+              usleep(80000);
+              drony[numer_aktywnego].zapisz_drona(numer_aktywnego+1);
               usleep(150000);
               Lacze.Rysuj();
               }
 
               sciezka[2]=0;
               odleglosc=sciezka.modul();
-              lot_do_przodu(Lacze,drony[numer_aktywnego],kat,odleglosc,numer_aktywnego-1);
               
-              opadanie(Lacze,drony[numer_aktywnego],wysokosc,numer_aktywnego-1);
+              lot_do_przodu(Lacze,drony[numer_aktywnego],kat,odleglosc,numer_aktywnego);
+              
+              opadanie(Lacze,drony[numer_aktywnego],wysokosc,numer_aktywnego);
               
 
-              drony[numer_aktywnego].zapisz_drona(numer_aktywnego);
+              drony[(numer_aktywnego)].zapisz_drona((numer_aktywnego+1));
               usleep(150000);
               Lacze.Rysuj();
               
@@ -185,12 +187,16 @@ void menu()
        return menu();
 }
 
-double kat_miedzy_wektorami (vector3d &pierwszy,vector3d &drugi){
-  double kat,pom1,pom2;
-  pom1=pierwszy[0]*drugi[0];
-  pom2=pierwszy[1]*drugi[1];
-  kat=(pom1+pom2)/(pierwszy.modul()*drugi.modul());
-  return acos(kat);
+double kat_miedzy_wektorami (vector3d sciezka,dron &wiatrak){
+  double pom1,pom2;
+  vector3d v1,v2;
+  v1=wiatrak.daj_wektor(0);
+  v2=wiatrak.daj_wektor(3);
+
+  pom1=v1[1]-v2[1];
+  pom2=v1[0]-v2[0];
+
+  return (atan(sciezka[1]/sciezka[0])-atan(pom1/pom2));
 
 }
 
