@@ -2,6 +2,10 @@
 
 #include "brylageo.hh"
 
+/*!
+ * \file
+ * \brief Ten plik zawiera definicję klasy graniastoslup
+ */
 class graniastoslup : public brylageo
 {
     /*!
@@ -26,12 +30,37 @@ class graniastoslup : public brylageo
  *                                   
  */
     void ustaw_srodek();
+    /*!
+    *       \brief Metoda wczytujaca rotor z danego pliku
+    *      \param[in] nazwa - nazwa pliku
+    */
     bool wczytaj(const std::string &nazwa);
+    /*!
+    *       \brief Metoda zapisujaca rotor do danego pliku
+    *      \param[in] nazwa - nazwa pliku
+    */
     bool zapis(const std::string &nazwa) const;
+    /*!
+    * \brief Metoda przesuniecia graniastoslupa o dany wektor
+    *      \param[in] wek -  wektor
+    *      \retval graniastoslup
+    */
     graniastoslup owektor(vector3d wek);
+    /*!
+    * \brief Metoda przesuniecia graniastoslupa przeciwny niz dany wektor
+    *      \param[in] wek -  wektor
+    *      \retval graniastoslup
+    */
     graniastoslup owektor_m(vector3d wek);
+    /*!
+    * \brief Metoda obrotu graniastoslupa o dany kat
+    *      \param[in] kat -  kat obrotu
+    *      \retval graniastoslup
+    */
     graniastoslup obrot(const double kat);
     graniastoslup rotacja(const double kat);
-
+    /*!
+    * \brief Metoda zwracajaca srodek graniastoslupa
+    */
     vector3d daj_srodek();
 };

@@ -227,7 +227,7 @@ void menu()
     drony[(numer_aktywnego)].zapisz_drona((numer_aktywnego + 1));
     usleep(150000);
     Lacze.Rysuj();
-    std::cout << "Koniec Lotu zwiadowczego -> brak zoltkow na horyzoncie \n";
+    std::cout << "Koniec lotu zwiadowczego \nWnioski: brak zoltkow na horyzoncie \n";
 
     break;
 
@@ -238,6 +238,8 @@ void menu()
     break;
 
   case 'k':
+    std::cout << "Ogolna liczba obiektow typu brylageo: "<<std::endl;
+    std::cout << "Aktualna liczba obiektow typu brylageo: "<<std::endl;
     std::cout << "Koniec dzialania programu.\n ";
     return;
 

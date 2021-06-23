@@ -13,7 +13,7 @@
 /*!
  * \file  matrix.hh
  *  
- *  Plik zawiera definicję klasy matrix oraz
+ *  \brief Plik zawiera definicję klasy matrix oraz
  *  jej opisane metody i funkcje.
  *  
  */

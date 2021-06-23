@@ -5,10 +5,10 @@ dron::dron()
 {
     double tab[3] = {1, 1, 1};
     vector3d tmp(tab);
-
     trans = tmp;
     KatOrientacji_st = 1;
 }
+
 
 void dron::ustaw_srodek()
 {

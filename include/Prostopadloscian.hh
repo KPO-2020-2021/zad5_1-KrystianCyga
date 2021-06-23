@@ -12,7 +12,7 @@
 /*!
  * \file  Prostopadloscian.hh
  *  
- *  Plik zawiera definicję klasy Prostopadloscian oraz
+ *  \brief Plik zawiera definicję klasy Prostopadloscian oraz
  *  jej opisane metody i funkcje.
  *  
  */

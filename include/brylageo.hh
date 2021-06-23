@@ -13,16 +13,6 @@
 class brylageo
 {
 protected:
-    /*!
-    * \brief Zmienna zliczająca aktualnie istniejące obiketu typu brylageo.
-    */
-    static int ObAkt;
-
-   /*!
-    * \brief Zmienna zliczająca ogólnie stworzone obiekty typu brylageo.
-    */
-    static int ObOgol;
-
 std::string NazwaPlikuBrylyWzorc;
 std::string NazwaPlikubryluFinalnej;
 /*! 
@@ -33,6 +23,7 @@ double KatOrientacji_st;
 int numer_drona_aktywnego;
 
 public:
+
 /*!
  * \brief Konstruktor bezparamereyczny klasy brylageo
  * ustawia nazwy na null
@@ -77,5 +68,4 @@ void TransformujWspolrzednePunktu(vector3d &Polozenie);
 void Skaluj(vector3d &Polozenie);
 void ustaw_kat(double kat){KatOrientacji_st=kat;};
 void ustaw_trans(vector3d &Polozenie){trans=Polozenie;};
-
 };

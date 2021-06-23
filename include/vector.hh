@@ -6,13 +6,19 @@
 #include <stdexcept>
 #include <math.h>
 #include <cassert>
+#include <initializer_list>
+#include <unistd.h>
+#include <iomanip>
+#include <vector>
+#include <list>
+
 #define epsilon 0.000001
 
 
 /*!
  * \file  vector.hh
  *  
- *  Plik zawiera definicję klasy vector oraz
+ * \brief Plik zawiera definicję klasy vector oraz
  *  jej opisane metody i funkcje.
  *  
  */
@@ -30,7 +36,19 @@ class Vector
     T wspolrzedne[ROZMIAR]; //Tablica wektora
 
 public:
+
+    static unsigned int LiczbaAktywnychWektorow;
+    static unsigned int OgolnaLiczbaWektorow;
+/*
+    static int daj_aktywne() { return Vector::LiczbaAktywnychWektorow; };
+    static int daj_ogolne() { return Vector::OgolnaLiczbaWektorow; };
+    static void ZwiekszAktywne() { ++Vector::LiczbaAktywnychWektorow; };
+    static void ZmniejszAktywne() { --Vector::LiczbaAktywnychWektorow; };
+    static void Zwiekszogolne() { ++Vector::OgolnaLiczbaWektorow; };
+*/
     Vector();
+
+    ~Vector();
 
     Vector(T[ROZMIAR]);
 
@@ -96,12 +114,22 @@ inline std::ostream &operator<<(std::ostream &out, const Vector<T,ROZMIAR> &tmp)
 template <typename T,unsigned int ROZMIAR>
 Vector<T,ROZMIAR>::Vector()
 {
+   // ZwiekszAktywne();
+   // Zwiekszogolne();
     {
         for (T &wsp1 : wspolrzedne)
         {
             wsp1 = 0;
         }
     }
+}
+/*!
+ * \brief destruktor klasy Vector.
+ *                                                                    
+ */
+template <typename T,unsigned int ROZMIAR>
+Vector<T,ROZMIAR>::~Vector(){
+   // ZmniejszAktywne();
 }
 
 /*!
