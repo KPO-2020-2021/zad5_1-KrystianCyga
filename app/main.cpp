@@ -238,8 +238,8 @@ void menu()
     break;
 
   case 'k':
-    std::cout << "Ogolna liczba obiektow typu brylageo: "<<std::endl;
-    std::cout << "Aktualna liczba obiektow typu brylageo: "<<std::endl;
+    std::cout << "Aktywne wektory: " << vector3d::daj_aktywne() << std::endl;
+    std::cout << "Powstałe wektory: " << vector3d::daj_powstale() << std::endl;
     std::cout << "Koniec dzialania programu.\n ";
     return;
 

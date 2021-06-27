@@ -37,15 +37,15 @@ class Vector
 
 public:
 
-    static unsigned int LiczbaAktywnychWektorow;
-    static unsigned int OgolnaLiczbaWektorow;
-/*
-    static int daj_aktywne() { return Vector::LiczbaAktywnychWektorow; };
-    static int daj_ogolne() { return Vector::OgolnaLiczbaWektorow; };
-    static void ZwiekszAktywne() { ++Vector::LiczbaAktywnychWektorow; };
-    static void ZmniejszAktywne() { --Vector::LiczbaAktywnychWektorow; };
-    static void Zwiekszogolne() { ++Vector::OgolnaLiczbaWektorow; };
-*/
+    static unsigned int AktywneWektory;
+    static unsigned int PowstaleWektory;
+
+  static int daj_aktywne() { return AktywneWektory; };
+  static int daj_powstale() { return PowstaleWektory; };
+  static void zwieksz_aktywne() { ++AktywneWektory; };
+  static void zmniejsz_aktywne() { --AktywneWektory; };
+  static void zwieksz_powstale() { ++PowstaleWektory; };
+
     Vector();
 
     ~Vector();
@@ -61,6 +61,7 @@ public:
     Vector operator*(const T &tmp);
 
     Vector operator/(const T &tmp);
+    
 
     T operator[](unsigned int index) const {assert(index<ROZMIAR);return wspolrzedne[index];};
 
@@ -73,6 +74,12 @@ public:
     T modul();
 };
 
+template <typename T,unsigned int ROZMIAR>
+unsigned int Vector<T,ROZMIAR>::AktywneWektory = 0;
+
+template <typename T,unsigned int ROZMIAR>
+unsigned int Vector<T,ROZMIAR>::PowstaleWektory = 0;
+
 /*!
  * \brief Przeciazenie operatora >>
  *                                                                               
@@ -82,6 +89,8 @@ public:
 template <typename T,unsigned int ROZMIAR>
 inline std::istream &operator>>(std::istream &in, Vector<T,ROZMIAR> &tmp)
 {
+    tmp.zwieksz_aktywne();
+    tmp.zwieksz_powstale();
     for (unsigned int i = 0; i < ROZMIAR; ++i)
     {
         in >> tmp[i];
@@ -114,8 +123,8 @@ inline std::ostream &operator<<(std::ostream &out, const Vector<T,ROZMIAR> &tmp)
 template <typename T,unsigned int ROZMIAR>
 Vector<T,ROZMIAR>::Vector()
 {
-   // ZwiekszAktywne();
-   // Zwiekszogolne();
+    zwieksz_aktywne();
+    zwieksz_powstale();
     {
         for (T &wsp1 : wspolrzedne)
         {
@@ -129,7 +138,7 @@ Vector<T,ROZMIAR>::Vector()
  */
 template <typename T,unsigned int ROZMIAR>
 Vector<T,ROZMIAR>::~Vector(){
-   // ZmniejszAktywne();
+   zmniejsz_aktywne();
 }
 
 /*!
@@ -142,6 +151,8 @@ Vector<T,ROZMIAR>::~Vector(){
 template <typename T,unsigned int ROZMIAR>
 Vector<T,ROZMIAR>::Vector(T tmp[ROZMIAR])
 {
+    zwieksz_aktywne();
+    zwieksz_powstale();
     for (unsigned int i = 0; i < ROZMIAR; ++i)
     {
         wspolrzedne[i] = tmp[i];
