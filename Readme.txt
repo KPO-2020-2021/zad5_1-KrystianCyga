@@ -11,9 +11,9 @@ z-lot zwiadowczy (modyfikacja)      WYKONANA zostala dzialajaca modyfikacja
 m-powrot do menu
 k-koniec dzialania programu
 
-Program wykonuje sie bez wiekszych problemow ( nie licząc rownych komunikatow GNUPLOTA ).
+Program wykonuje sie bez wiekszych problemow ( nie licząc dziwnych komunikatow GNUPLOTA ).
 
 Dokumentacja- opisy klas, plikow,metod,funkcji zostaly poprawnie wykonane.
 
-Nie wiem czy wszystkie dokumenty sie dobrze wygenerowaly bo cmake nie chcial zainstalowac coverage.
+Nie wiem czy wszystkie dokumenty sie dobrze wygenerowaly, bo nie udalo mi się zainstalowac "cmake coverage".
 

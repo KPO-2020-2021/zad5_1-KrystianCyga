@@ -19,6 +19,7 @@ std::string NazwaPlikubryluFinalnej;
 * \brief Skala figury w postaci wektora
 */
 vector3d skala,trans;
+std::vector <vector3d> wierzcholki;
 double KatOrientacji_st;
 int numer_drona_aktywnego;
 
